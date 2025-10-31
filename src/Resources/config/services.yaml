@@ -1,0 +1,16 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  Tourze\DifyConsoleApiBundle\Controller\:
+    resource: '../../Controller/'
+  Tourze\DifyConsoleApiBundle\Repository\:
+    resource: '../../Repository/'
+  Tourze\DifyConsoleApiBundle\Service\:
+    resource: '../../Service/'
+  Tourze\DifyConsoleApiBundle\Command\:
+    resource: '../../Command/'
+  Tourze\DifyConsoleApiBundle\MessageHandler\:
+    resource: '../../MessageHandler/'

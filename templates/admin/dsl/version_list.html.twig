@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSL版本历史 - {{ app.name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            color: #212529;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        .container-fluid {
+            padding: 0;
+            margin: 0;
+            max-width: none;
+        }
+
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #e9ecef;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #495057;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .page-title i {
+            margin-right: 0.75rem;
+            color: #6c757d;
+        }
+
+        .btn-back {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            color: #495057;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: all 0.15s ease-in-out;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-back:hover {
+            background: #f8f9fa;
+            border-color: #adb5bd;
+            color: #495057;
+            text-decoration: none;
+        }
+
+        .btn-back i {
+            margin-right: 0.5rem;
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .table-container {
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 0.375rem;
+            overflow: hidden;
+        }
+
+        .table {
+            margin: 0;
+            font-size: 0.875rem;
+        }
+
+        .table thead th {
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            color: #495057;
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            font-size: 0.8125rem;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            border-top: none;
+        }
+
+        .table tbody td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: middle;
+        }
+
+        .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .version-badge {
+            background: #495057;
+            color: #fff;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .hash-code {
+            background: #f8f9fa;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+            font-size: 0.75rem;
+            color: #6c757d;
+        }
+
+        .btn-group-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-sm {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.75rem;
+            border-radius: 0.25rem;
+            border: 1px solid transparent;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.15s ease-in-out;
+        }
+
+        .btn-outline-primary {
+            color: #0d6efd;
+            border-color: #0d6efd;
+            background: #fff;
+        }
+
+        .btn-outline-primary:hover {
+            background: #0d6efd;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .btn-outline-secondary {
+            color: #6c757d;
+            border-color: #6c757d;
+            background: #fff;
+        }
+
+        .btn-outline-secondary:hover {
+            background: #6c757d;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .btn-sm i {
+            margin-right: 0.375rem;
+            font-size: 0.75rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h5 {
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-primary {
+            background: #0d6efd;
+            border-color: #0d6efd;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.15s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            background: #0b5ed7;
+            border-color: #0a58ca;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .btn-primary i {
+            margin-right: 0.5rem;
+        }
+
+        .modal-content {
+            border: 1px solid #dee2e6;
+            border-radius: 0.375rem;
+        }
+
+        .modal-header {
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            padding: 1rem 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #495057;
+            margin: 0;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            margin: -0.5rem -0.5rem -0.5rem auto;
+        }
+
+        .code-container {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 0.25rem;
+            max-height: 70vh;
+            overflow: auto;
+            position: relative;
+        }
+
+        .code-container pre {
+            margin: 0;
+            padding: 1rem;
+            white-space: pre;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Consolas', 'Source Code Pro', monospace;
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            color: #495057;
+            background: #ffffff;
+            border-radius: 0.25rem;
+        }
+
+        .code-container .json-key {
+            color: #0066cc;
+            font-weight: 600;
+        }
+
+        .code-container .json-string {
+            color: #008000;
+        }
+
+        .code-container .json-number {
+            color: #ff6600;
+        }
+
+        .code-container .json-boolean {
+            color: #0066cc;
+            font-weight: 600;
+        }
+
+        .code-container .json-null {
+            color: #999999;
+            font-style: italic;
+        }
+
+        .code-container .json-punctuation {
+            color: #333333;
+        }
+
+        .code-header {
+            background: #e9ecef;
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 0.75rem;
+            color: #6c757d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid #dee2e6;
+            color: #6c757d;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+        }
+
+        .copy-btn:hover {
+            background: #f8f9fa;
+            border-color: #adb5bd;
+        }
+
+        .copy-btn i {
+            margin-right: 0.25rem;
+        }
+
+        /* Diff 样式 */
+        .diff-modal .modal-dialog {
+            max-width: 95vw;
+            margin: 1rem auto;
+        }
+
+        .diff-container {
+            display: flex;
+            height: 70vh;
+            border: 1px solid #dee2e6;
+            border-radius: 0.375rem;
+            overflow: hidden;
+        }
+
+        .diff-pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .diff-pane:first-child {
+            border-right: 1px solid #dee2e6;
+        }
+
+        .diff-header {
+            background: #f8f9fa;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #dee2e6;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #495057;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .diff-header.old {
+            background: #fff5f5;
+            border-bottom-color: #fed7d7;
+            color: #c53030;
+        }
+
+        .diff-header.new {
+            background: #f0fff4;
+            border-bottom-color: #c6f6d5;
+            color: #2f855a;
+        }
+
+        .diff-content {
+            flex: 1;
+            overflow: auto;
+            position: relative;
+        }
+
+        .diff-line-numbers {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 60px;
+            background: #f8f9fa;
+            border-right: 1px solid #e9ecef;
+            padding: 0.5rem 0;
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+            font-size: 0.75rem;
+            color: #6c757d;
+            line-height: 1.4;
+            text-align: right;
+            user-select: none;
+        }
+
+        .diff-line-numbers div {
+            padding: 0 0.5rem;
+            height: 1.4em;
+        }
+
+        .diff-code {
+            margin-left: 60px;
+            padding: 0.5rem 0;
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            white-space: pre;
+            color: #495057;
+        }
+
+        .diff-line {
+            display: flex;
+            min-height: 1.4em;
+            padding: 0 0.75rem;
+            position: relative;
+        }
+
+        .diff-line.added {
+            background-color: #d4edda;
+            border-left: 3px solid #28a745;
+        }
+
+        .diff-line.removed {
+            background-color: #f8d7da;
+            border-left: 3px solid #dc3545;
+        }
+
+        .diff-line.changed {
+            background-color: #fff3cd;
+            border-left: 3px solid #ffc107;
+        }
+
+        .diff-line.unchanged {
+            background-color: transparent;
+        }
+
+        .diff-line.empty {
+            background-color: #f8f9fa;
+            border-left: 3px solid #6c757d;
+            opacity: 0.5;
+        }
+
+        .diff-line:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+
+        .diff-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+            color: #6c757d;
+        }
+
+        .diff-loading i {
+            font-size: 2rem;
+            margin-right: 1rem;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .diff-stats {
+            background: #f8f9fa;
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 0.75rem;
+            color: #6c757d;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .stat-added {
+            color: #28a745;
+        }
+
+        .stat-removed {
+            color: #dc3545;
+        }
+
+        .stat-changed {
+            color: #ffc107;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+                padding: 0 1rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            .table {
+                min-width: 600px;
+            }
+
+            .btn-group-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-sm {
+                justify-content: center;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-title {
+                font-size: 1.125rem;
+            }
+
+            .main-content {
+                padding: 0.75rem;
+            }
+
+            .table thead th,
+            .table tbody td {
+                padding: 0.5rem 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="header">
+        <div class="header-content">
+            <h1 class="page-title">
+                <i class="fas fa-history"></i>
+                DSL版本历史 - {{ app.name }}
+            </h1>
+            <a href="/admin/dify/chat-assistant-app/{{ app.id }}" class="btn-back">
+                <i class="fas fa-arrow-left"></i> 返回详情
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        {% if versions|length > 0 %}
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>版本号</th>
+                            <th>DSL哈希</th>
+                            <th>同步时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for version in versions %}
+                            <tr>
+                                <td>
+                                    <span class="version-badge">#{{ version.version }}</span>
+                                </td>
+                                <td>
+                                    <code class="hash-code">{{ version.dslHash[:16] }}...</code>
+                                </td>
+                                <td>{{ version.syncTime|date('Y-m-d H:i:s') }}</td>
+                                <td>
+                                    <div class="btn-group-actions">
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#dslModal{{ version.id }}">
+                                            <i class="fas fa-code"></i> 查看DSL
+                                        </button>
+
+                                        {% if loop.index0 < versions|length - 1 %}
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-secondary compare-btn"
+                                                    data-version1="{{ version.version }}"
+                                                    data-version2="{{ versions[loop.index0 + 1].version }}"
+                                                    data-content1="{{ version.dslRawContent ?? version.dslContent|json_encode(448)|e('html_attr') }}"
+                                                    data-content2="{{ versions[loop.index0 + 1].dslRawContent ?? versions[loop.index0 + 1].dslContent|json_encode(448)|e('html_attr') }}"
+                                                    data-sync1="{{ version.syncTime|date('Y-m-d H:i:s') }}"
+                                                    data-sync2="{{ versions[loop.index0 + 1].syncTime|date('Y-m-d H:i:s') }}"
+                                                    data-hash1="{{ version.dslHash }}"
+                                                    data-hash2="{{ versions[loop.index0 + 1].dslHash }}">
+                                                <i class="fas fa-code-compare"></i> 比较差异
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- DSL内容模态框 -->
+                            <div class="modal fade" id="dslModal{{ version.id }}" tabindex="-1">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">
+                                                <i class="fas fa-code me-2"></i>
+                                                DSL内容 - 版本 #{{ version.version }}
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body p-0">
+                                            <div class="code-container">
+                                                <div class="code-header">
+                                                    <span>DSL 配置内容</span>
+                                                    <button type="button" class="copy-btn" onclick="copyToClipboard('dsl-content-{{ version.id }}')">
+                                                        <i class="fas fa-copy"></i> 复制
+                                                    </button>
+                                                </div>
+                                                <pre id="dsl-content-{{ version.id }}"><code>{{ version.dslRawContent ?? version.dslContent|json_encode(448) }}</code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <i class="fas fa-history"></i>
+                <h5>暂无DSL版本历史</h5>
+                <p>该应用还没有任何DSL版本记录，点击下方按钮立即同步。</p>
+                <a href="/admin/dify/chat-assistant-app/{{ app.id }}/sync-dsl" class="btn btn-primary">
+                    <i class="fas fa-sync"></i> 立即同步DSL
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- DSL Diff Modal -->
+<div class="modal fade diff-modal" id="diffModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-code-compare me-2"></i>
+                    DSL版本对比
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div id="diffLoading" class="diff-loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>正在加载差异对比...</span>
+                </div>
+                <div id="diffContainer" class="diff-container" style="display: none;">
+                    <div class="diff-stats">
+                        <div class="stat-item stat-added">
+                            <i class="fas fa-plus"></i>
+                            <span>新增 <span id="addedCount">0</span> 行</span>
+                        </div>
+                        <div class="stat-item stat-removed">
+                            <i class="fas fa-minus"></i>
+                            <span>删除 <span id="removedCount">0</span> 行</span>
+                        </div>
+                        <div class="stat-item stat-changed">
+                            <i class="fas fa-edit"></i>
+                            <span>修改 <span id="changedCount">0</span> 行</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; height: calc(100% - 40px);">
+                        <div class="diff-pane">
+                            <div class="diff-header old">
+                                <span>版本 #<span id="oldVersion"></span></span>
+                                <button type="button" class="copy-btn" onclick="copyDiffContent('oldContent')">
+                                    <i class="fas fa-copy"></i> 复制
+                                </button>
+                            </div>
+                            <div class="diff-content">
+                                <div class="diff-line-numbers" id="oldLineNumbers"></div>
+                                <div class="diff-code" id="oldContent"></div>
+                            </div>
+                        </div>
+                        <div class="diff-pane">
+                            <div class="diff-header new">
+                                <span>版本 #<span id="newVersion"></span></span>
+                                <button type="button" class="copy-btn" onclick="copyDiffContent('newContent')">
+                                    <i class="fas fa-copy"></i> 复制
+                                </button>
+                            </div>
+                            <div class="diff-content">
+                                <div class="diff-line-numbers" id="newLineNumbers"></div>
+                                <div class="diff-code" id="newContent"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 为同步按钮添加加载状态
+        document.querySelectorAll('.btn-primary[href*="sync-dsl"]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (icon) {
+                    icon.className = 'fas fa-spinner fa-spin';
+                    this.innerHTML = icon.outerHTML + ' 同步中...';
+                    this.style.pointerEvents = 'none';
+                    this.style.opacity = '0.6';
+                }
+            });
+        });
+
+        // 为所有JSON代码添加语法高亮
+        document.querySelectorAll('pre code').forEach(function(block) {
+            highlightJSON(block);
+        });
+
+        // 添加比较按钮事件监听器
+        document.querySelectorAll('.compare-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                const diffData = {
+                    version1: {
+                        version: this.dataset.version1,
+                        syncTime: this.dataset.sync1,
+                        hash: this.dataset.hash1,
+                    },
+                    version2: {
+                        version: this.dataset.version2,
+                        syncTime: this.dataset.sync2,
+                        hash: this.dataset.hash2,
+                    },
+                    oldContent: this.dataset.content1,
+                    newContent: this.dataset.content2,
+                };
+
+                showDiffModal(diffData);
+            });
+        });
+    });
+
+    // 显示diff modal
+    function showDiffModal(diffData) {
+        const modal = new bootstrap.Modal(document.getElementById('diffModal'));
+        const diffLoading = document.getElementById('diffLoading');
+        const diffContainer = document.getElementById('diffContainer');
+
+        // 显示加载状态
+        diffLoading.style.display = 'flex';
+        diffContainer.style.display = 'none';
+
+        // 设置版本信息
+        document.getElementById('oldVersion').textContent = diffData.version1.version;
+        document.getElementById('newVersion').textContent = diffData.version2.version;
+
+        modal.show();
+
+        // 直接渲染diff（无需后端请求）
+        setTimeout(function() {
+            renderDiff(diffData);
+            diffLoading.style.display = 'none';
+            diffContainer.style.display = 'block';
+        }, 100); // 短暂延迟，让用户看到loading效果
+    }
+
+    // 渲染diff结果
+    function renderDiff(diffData) {
+        const oldContent = diffData.oldContent || '';
+        const newContent = diffData.newContent || '';
+
+        const diff = computeLineDiff(oldContent, newContent);
+
+        // 更新统计信息
+        document.getElementById('addedCount').textContent = diff.stats.added;
+        document.getElementById('removedCount').textContent = diff.stats.removed;
+        document.getElementById('changedCount').textContent = diff.stats.changed;
+
+        // 渲染diff内容
+        renderDiffPane('oldContent', 'oldLineNumbers', diff.oldLines, diff.oldLineNumbers);
+        renderDiffPane('newContent', 'newLineNumbers', diff.newLines, diff.newLineNumbers);
+
+        // 同步滚动
+        setupScrollSync();
+    }
+
+    // 计算行级diff
+    function computeLineDiff(oldText, newText) {
+        const oldLines = oldText.split('\n');
+        const newLines = newText.split('\n');
+
+        const diff = {
+            oldLines: [],
+            newLines: [],
+            oldLineNumbers: [],
+            newLineNumbers: [],
+            stats: { added: 0, removed: 0, changed: 0 }
+        };
+
+        // 使用简单的LCS算法计算差异
+        const lcs = longestCommonSubsequence(oldLines, newLines);
+        const diffResult = generateDiff(oldLines, newLines, lcs);
+
+        let oldLineNum = 1;
+        let newLineNum = 1;
+
+        diffResult.forEach(function(item) {
+            if (item.type === 'unchanged') {
+                diff.oldLines.push({ content: item.content, type: 'unchanged' });
+                diff.newLines.push({ content: item.content, type: 'unchanged' });
+                diff.oldLineNumbers.push(oldLineNum++);
+                diff.newLineNumbers.push(newLineNum++);
+            } else if (item.type === 'removed') {
+                diff.oldLines.push({ content: item.content, type: 'removed' });
+                diff.newLines.push({ content: '', type: 'empty' });
+                diff.oldLineNumbers.push(oldLineNum++);
+                diff.newLineNumbers.push('');
+                diff.stats.removed++;
+            } else if (item.type === 'added') {
+                diff.oldLines.push({ content: '', type: 'empty' });
+                diff.newLines.push({ content: item.content, type: 'added' });
+                diff.oldLineNumbers.push('');
+                diff.newLineNumbers.push(newLineNum++);
+                diff.stats.added++;
+            }
+        });
+
+        return diff;
+    }
+
+    // 最长公共子序列算法
+    function longestCommonSubsequence(arr1, arr2) {
+        const m = arr1.length;
+        const n = arr2.length;
+        const dp = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));
+
+        for (let i = 1; i <= m; i++) {
+            for (let j = 1; j <= n; j++) {
+                if (arr1[i - 1] === arr2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        // 回溯构建LCS
+        const lcs = [];
+        let i = m, j = n;
+        while (i > 0 && j > 0) {
+            if (arr1[i - 1] === arr2[j - 1]) {
+                lcs.unshift({ i: i - 1, j: j - 1, content: arr1[i - 1] });
+                i--;
+                j--;
+            } else if (dp[i - 1][j] > dp[i][j - 1]) {
+                i--;
+            } else {
+                j--;
+            }
+        }
+
+        return lcs;
+    }
+
+    // 生成diff结果
+    function generateDiff(oldLines, newLines, lcs) {
+        const result = [];
+        let oldIndex = 0;
+        let newIndex = 0;
+        let lcsIndex = 0;
+
+        while (oldIndex < oldLines.length || newIndex < newLines.length) {
+            if (lcsIndex < lcs.length &&
+                oldIndex === lcs[lcsIndex].i &&
+                newIndex === lcs[lcsIndex].j) {
+                // 相同行
+                result.push({
+                    type: 'unchanged',
+                    content: lcs[lcsIndex].content
+                });
+                oldIndex++;
+                newIndex++;
+                lcsIndex++;
+            } else if (lcsIndex < lcs.length && oldIndex < lcs[lcsIndex].i) {
+                // 删除的行
+                result.push({
+                    type: 'removed',
+                    content: oldLines[oldIndex]
+                });
+                oldIndex++;
+            } else if (lcsIndex < lcs.length && newIndex < lcs[lcsIndex].j) {
+                // 新增的行
+                result.push({
+                    type: 'added',
+                    content: newLines[newIndex]
+                });
+                newIndex++;
+            } else if (oldIndex < oldLines.length) {
+                // 剩余的删除行
+                result.push({
+                    type: 'removed',
+                    content: oldLines[oldIndex]
+                });
+                oldIndex++;
+            } else if (newIndex < newLines.length) {
+                // 剩余的新增行
+                result.push({
+                    type: 'added',
+                    content: newLines[newIndex]
+                });
+                newIndex++;
+            }
+        }
+
+        return result;
+    }
+
+    // 渲染diff面板
+    function renderDiffPane(contentId, lineNumbersId, lines, lineNumbers) {
+        const contentEl = document.getElementById(contentId);
+        const lineNumbersEl = document.getElementById(lineNumbersId);
+
+        const contentHtml = lines.map(function(line) {
+            const className = line.type === 'empty' ? 'diff-line empty' : `diff-line ${line.type}`;
+            return `<div class="${className}">${escapeHtml(line.content)}</div>`;
+        }).join('');
+
+        const lineNumbersHtml = lineNumbers.map(function(num) {
+            return `<div>${num || ''}</div>`;
+        }).join('');
+
+        contentEl.innerHTML = contentHtml;
+        lineNumbersEl.innerHTML = lineNumbersHtml;
+    }
+
+    // 设置滚动同步
+    function setupScrollSync() {
+        const oldContent = document.querySelector('#diffModal .diff-pane:first-child .diff-content');
+        const newContent = document.querySelector('#diffModal .diff-pane:last-child .diff-content');
+
+        let isSyncing = false;
+
+        function syncScroll(source, target) {
+            if (isSyncing) return;
+            isSyncing = true;
+            target.scrollTop = source.scrollTop;
+            target.scrollLeft = source.scrollLeft;
+            setTimeout(() => { isSyncing = false; }, 10);
+        }
+
+        oldContent.addEventListener('scroll', () => syncScroll(oldContent, newContent));
+        newContent.addEventListener('scroll', () => syncScroll(newContent, oldContent));
+    }
+
+    // 复制diff内容
+    function copyDiffContent(contentId) {
+        const element = document.getElementById(contentId);
+        if (!element) return;
+
+        const text = Array.from(element.children)
+            .map(line => line.textContent)
+            .join('\n');
+
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(function() {
+                showCopySuccess(contentId);
+            });
+        } else {
+            fallbackCopyText(text);
+        }
+    }
+
+    // 转义HTML
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // 降级文本复制
+    function fallbackCopyText(text) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.select();
+
+        try {
+            document.execCommand('copy');
+            textArea.remove();
+            alert('已复制到剪贴板');
+        } catch (err) {
+            console.error('复制失败:', err);
+            textArea.remove();
+            alert('复制失败，请手动选择文本复制');
+        }
+    }
+
+    // JSON 语法高亮函数
+    function highlightJSON(element) {
+        let json = element.textContent;
+        try {
+            // 验证并重新格式化JSON
+            const parsed = JSON.parse(json);
+            json = JSON.stringify(parsed, null, 2);
+
+            // 应用语法高亮
+            json = json.replace(/("(\\u[a-fA-F0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                let cls = 'json-number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'json-null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+
+            // 高亮标点符号
+            json = json.replace(/([{}[\],:]+)/g, '<span class="json-punctuation">$1</span>');
+
+            element.innerHTML = json;
+        } catch (e) {
+            // 如果不是有效的JSON，保持原样
+            console.warn('Invalid JSON for highlighting:', e);
+        }
+    }
+
+    // 复制到剪贴板函数
+    function copyToClipboard(elementId) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+
+        const text = element.textContent;
+
+        if (navigator.clipboard && window.isSecureContext) {
+            // 使用现代 Clipboard API
+            navigator.clipboard.writeText(text).then(function() {
+                showCopySuccess(elementId);
+            }).catch(function(err) {
+                console.error('复制失败:', err);
+                fallbackCopy(text);
+            });
+        } else {
+            // 降级方案
+            fallbackCopy(text);
+        }
+    }
+
+    // 降级复制方案
+    function fallbackCopy(text) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            document.execCommand('copy');
+            textArea.remove();
+            showCopySuccess();
+        } catch (err) {
+            console.error('复制失败:', err);
+            textArea.remove();
+            alert('复制失败，请手动选择文本复制');
+        }
+    }
+
+    // 显示复制成功提示
+    function showCopySuccess(elementId) {
+        const button = document.querySelector(`button[onclick="copyToClipboard('${elementId}')"]`);
+        if (button) {
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i> 已复制';
+            button.style.color = '#28a745';
+
+            setTimeout(function() {
+                button.innerHTML = originalHTML;
+                button.style.color = '';
+            }, 2000);
+        }
+    }
+</script>
+</body>
+</html>
