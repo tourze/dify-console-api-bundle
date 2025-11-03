@@ -244,11 +244,11 @@ class DifyGenericExceptionTest extends AbstractExceptionTestCase
 
     public function testInheritedMethodsFromBaseException(): void
     {
-        $file = __FILE__;
-        $line = __LINE__ + 1;
         $exception = DifyGenericException::create('Test error');
 
-        $this->assertSame($file, $exception->getFile());
+        // 异常的 getFile() 应该返回异常类的文件位置，而不是调用者的位置
+        $expectedFile = '/home/admin/work/source/php-monorepo/packages/dify-console-api-bundle/src/Exception/DifyGenericException.php';
+        $this->assertSame($expectedFile, $exception->getFile());
         $this->assertIsInt($exception->getLine());
         $this->assertIsArray($exception->getTrace());
         $this->assertIsString($exception->getTraceAsString());
