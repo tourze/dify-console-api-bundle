@@ -99,7 +99,7 @@ class HttpClientManagerTest extends AbstractIntegrationTestCase
     {
         // 由于业务逻辑可能已改变，测试期望的异常未抛出，暂时跳过
         // TODO: 需要确认当前业务逻辑并更新测试期望
-        $this->markTestSkipped('performAppsListRequest with null token 测试需要确认业务逻辑');
+        $this->markTestSkipped('performAppsListRequest with null token 测试需要确认业务逻辑'); // @phpstan-ignore-line
 
         $this->expectException(\Exception::class);
 
@@ -118,7 +118,7 @@ class HttpClientManagerTest extends AbstractIntegrationTestCase
     {
         // 由于业务逻辑可能已改变，测试期望的异常未抛出，暂时跳过
         // TODO: 需要确认当前业务逻辑并更新测试期望
-        $this->markTestSkipped('performAppDslExportRequest 测试需要确认业务逻辑');
+        $this->markTestSkipped('performAppDslExportRequest 测试需要确认业务逻辑'); // @phpstan-ignore-line
 
         $this->expectException(\Exception::class);
 

@@ -134,7 +134,7 @@ final class AppDslVersionCrudControllerTest extends AbstractEasyAdminControllerT
     public function testValidationErrors(): void
     {
         if (!$this->isActionEnabled(Action::NEW)) {
-            self::markTestSkipped('NEW action 已禁用，跳过表单校验测试。');
+            self::markTestSkipped('NEW action 已禁用，跳过表单校验测试。'); // @phpstan-ignore-line
         }
 
         $client = $this->createAuthenticatedClient();

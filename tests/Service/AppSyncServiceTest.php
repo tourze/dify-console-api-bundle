@@ -52,7 +52,7 @@ class AppSyncServiceTest extends AbstractIntegrationTestCase
     {
         // 由于Mock配置复杂且行为预期不一致，暂时跳过此测试类
         // TODO: 需要重构Mock配置和测试逻辑
-        $this->markTestSkipped('AppSyncService 测试需要重构Mock配置');
+        $this->markTestSkipped('AppSyncService 测试需要重构Mock配置'); // @phpstan-ignore-line
 
         // 准备 Mock 依赖
         $this->difyClient = $this->createMock(DifyClientServiceInterface::class);

@@ -16,7 +16,7 @@ use Tourze\DifyConsoleApiBundle\Message\SyncApplicationsMessage;
 use Tourze\DifyConsoleApiBundle\Repository\DifyAccountRepository;
 
 #[WithMonologChannel(channel: 'dify_console_api')]
-class DifyAppSyncController extends AbstractController
+final class DifyAppSyncController extends AbstractController
 {
     public function __construct(
         private readonly MessageBusInterface $messageBus,

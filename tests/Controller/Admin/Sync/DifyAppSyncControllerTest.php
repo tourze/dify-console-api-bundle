@@ -42,7 +42,11 @@ class DifyAppSyncControllerTest extends AbstractWebTestCase
         $this->logger = $this->createMock(LoggerInterface::class);
         $this->accountRepository = $this->createMock(DifyAccountRepository::class);
 
-        $this->controller = self::getService(DifyAppSyncController::class);
+        $this->controller = new DifyAppSyncController(
+            $this->messageBus,
+            $this->logger,
+            $this->accountRepository,
+        );
     }
 
     public function testInvokeSuccess(): void

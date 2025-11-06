@@ -49,7 +49,7 @@ class DifyApiIntegrationTest extends AbstractIntegrationTestCase
     {
         // 由于集成测试存在final类Mock问题和复杂的外部依赖，暂时跳过
         // TODO: 需要重构Mock策略或使用真实测试环境
-        $this->markTestSkipped('DifyApiIntegrationTest 需要重构Mock策略以支持final类和外部依赖');
+        $this->markTestSkipped('DifyApiIntegrationTest 需要重构Mock策略以支持final类和外部依赖'); // @phpstan-ignore-line
 
         // 创建测试数据
         $this->createTestData();

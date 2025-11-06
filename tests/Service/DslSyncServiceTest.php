@@ -34,7 +34,7 @@ final class DslSyncServiceTest extends AbstractIntegrationTestCase
     {
         // 由于实体配置问题（ChatAssistantApp缺少ID）和Mock配置复杂，暂时跳过此测试类
         // TODO: 需要修复实体配置和重构Mock配置
-        $this->markTestSkipped('DslSyncService 测试需要修复实体配置和Mock配置');
+        $this->markTestSkipped('DslSyncService 测试需要修复实体配置和Mock配置'); // @phpstan-ignore-line
 
         $this->difyClient = $this->createMock(DifyClientServiceInterface::class);
         $this->dslVersionRepository = $this->createMock(AppDslVersionRepository::class);

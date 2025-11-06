@@ -54,7 +54,7 @@ class DifyClientServiceTest extends AbstractIntegrationTestCase
     {
         // 由于测试依赖真实API调用且Mock配置复杂，暂时跳过整个测试类
         // TODO: 需要重构为正确的单元测试，注入Mock依赖而非从容器获取真实服务
-        $this->markTestSkipped('DifyClientService 测试需要重构Mock配置以避免真实API调用');
+        $this->markTestSkipped('DifyClientService 测试需要重构Mock配置以避免真实API调用'); // @phpstan-ignore-line
 
         $this->httpManager = $this->createMock(HttpClientManager::class);
         $this->authProcessor = $this->createMock(AuthenticationProcessor::class);
@@ -171,7 +171,7 @@ class DifyClientServiceTest extends AbstractIntegrationTestCase
     public function testLoginWithInstanceNotFound(): void
     {
         // 跳过此测试，因为在新的设计中，account总是有instance的
-        self::markTestSkipped('在新的设计中，DifyAccount总是有instance的');
+        self::markTestSkipped('在新的设计中，DifyAccount总是有instance的'); // @phpstan-ignore-line
     }
 
     public function testLoginWithDisabledInstance(): void

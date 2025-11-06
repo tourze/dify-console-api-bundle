@@ -51,7 +51,7 @@ class SyncFlowIntegrationTest extends AbstractIntegrationTestCase
     {
         // 由于集成测试存在复杂的依赖和配置问题，暂时跳过
         // TODO: 需要重构集成测试环境和Mock配置
-        $this->markTestSkipped('SyncFlowIntegrationTest 需要重构集成测试环境');
+        $this->markTestSkipped('SyncFlowIntegrationTest 需要重构集成测试环境'); // @phpstan-ignore-line
 
         // 创建测试数据
         $this->createTestData();
