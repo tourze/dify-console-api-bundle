@@ -30,7 +30,7 @@
     "symfony/yaml": "^7.3",
     "tourze/bundle-dependency": "1.*",
     "tourze/doctrine-indexed-bundle": "1.0.*",
-    "tourze/doctrine-timestamp-bundle": "1.0.*",
+    "tourze/doctrine-timestamp-bundle": "1.1.*",
     "tourze/easy-admin-menu-bundle": "1.0.*"
   },
   "require-dev": {
