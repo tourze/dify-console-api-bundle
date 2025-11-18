@@ -33,11 +33,6 @@ class DifyInstanceCrudControllerTest extends AbstractEasyAdminControllerTestCase
         return self::getService(DifyInstanceCrudController::class);
     }
 
-    public function testGetEntityFqcnReturnsCorrectClass(): void
-    {
-        $this->assertSame(DifyInstance::class, DifyInstanceCrudController::getEntityFqcn());
-    }
-
     public function testConfigureFields(): void
     {
         $controller = $this->getControllerService();

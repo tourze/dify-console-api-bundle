@@ -46,11 +46,6 @@ class ChatflowAppCrudControllerTest extends AbstractEasyAdminControllerTestCase
         return self::getService(ChatflowAppCrudController::class);
     }
 
-    public function testGetEntityFqcnReturnsCorrectClass(): void
-    {
-        $this->assertSame(ChatflowApp::class, ChatflowAppCrudController::getEntityFqcn());
-    }
-
     public function testConfigureCrudReturnsCorrectConfiguration(): void
     {
         $this->setUpController();

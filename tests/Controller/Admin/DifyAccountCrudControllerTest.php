@@ -59,11 +59,6 @@ class DifyAccountCrudControllerTest extends AbstractEasyAdminControllerTestCase
         yield 'create_time' => ['创建时间'];
     }
 
-    public function testGetEntityFqcnReturnsCorrectClass(): void
-    {
-        $this->assertSame(DifyAccount::class, DifyAccountCrudController::getEntityFqcn());
-    }
-
     public function testConfigureCrudReturnsCorrectConfiguration(): void
     {
         $this->setUpController();

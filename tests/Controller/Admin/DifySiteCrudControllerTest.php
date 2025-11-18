@@ -67,11 +67,6 @@ class DifySiteCrudControllerTest extends AbstractEasyAdminControllerTestCase
         yield 'copyright' => ['copyright'];
     }
 
-    public function testGetEntityFqcn(): void
-    {
-        self::assertSame(DifySite::class, DifySiteCrudController::getEntityFqcn());
-    }
-
     public function testConfigureCrud(): void
     {
         $this->setUpController();

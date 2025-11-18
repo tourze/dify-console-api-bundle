@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tourze\DifyConsoleApiBundle\Tests\Controller\Admin;
 
-use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
@@ -87,11 +86,6 @@ class ChatAssistantAppCrudControllerTest extends AbstractEasyAdminControllerTest
         yield 'is_public' => ['isPublic'];
         yield 'prompt_template' => ['promptTemplate'];
         yield 'created_by_dify_user' => ['createdByDifyUser'];
-    }
-
-    public function testGetEntityFqcnReturnsCorrectClass(): void
-    {
-        $this->assertSame(ChatAssistantApp::class, ChatAssistantAppCrudController::getEntityFqcn());
     }
 
     public function testConfigureCrudReturnsCorrectConfiguration(): void

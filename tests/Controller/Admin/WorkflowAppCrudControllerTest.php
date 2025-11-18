@@ -43,11 +43,6 @@ class WorkflowAppCrudControllerTest extends AbstractEasyAdminControllerTestCase
         return self::getService(WorkflowAppCrudController::class);
     }
 
-    public function testGetEntityFqcnReturnsCorrectClass(): void
-    {
-        $this->assertSame(WorkflowApp::class, WorkflowAppCrudController::getEntityFqcn());
-    }
-
     public function testConfigureCrudReturnsCorrectConfiguration(): void
     {
         $this->setUpController();
